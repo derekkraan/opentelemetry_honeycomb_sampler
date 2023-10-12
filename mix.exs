@@ -7,7 +7,8 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package()
     ]
   end
 
@@ -25,6 +26,15 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
       {:ex_doc, "> 0.0.0", only: :dev},
       {:opentelemetry, "~> 1.2"},
       {:opentelemetry_api, "~> 1.2"}
+    ]
+  end
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      description: "Otel sampler for Honeycomb",
+      maintainers: ["Derek Kraan"],
+      links: %{GitHub: "https://github.com/derekkraan/opentelemetry_honeycomb_sampler"}
     ]
   end
 end
