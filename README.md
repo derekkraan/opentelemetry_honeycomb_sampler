@@ -2,7 +2,7 @@
 
 Sample with Honeycomb!
 
-This package provides a handy interface for sampling which is similar to how stock otel samplers work, but the return value is a single positive integer.
+This package provides a handy interface for sampling which is similar to how stock otel samplers work, but with all the messy details abstracted away. Simply pattern match on spans and set a sample rate.
 
 This package also makes sure that SampleRate is set on the spans as required by Honeycomb. Honeycomb multiplies your span counts by this SampleRate to arrive at a reasonable estimate of the true number of spans. This is also being set on child spans, so those will also be estimated properly by Honeycomb (unlike, I believe, in many other HC samplers).
 
