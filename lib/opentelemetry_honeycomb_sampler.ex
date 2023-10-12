@@ -7,12 +7,27 @@ defmodule OpentelemetryHoneycombSampler do
   config :opentelemetry,
     :sampler, {OpentelemetryHoneycombSampler, %{root: {MySampler, %{}}}}
   """
+
+  @callback setup(:otel_sampler.sampler_opts()) :: :otel_sampler.sampler_config()
+  @callback description(:otel_sampler.sampler_config()) :: :otel_sampler.description()
+  @callback should_sample(
+              :otel_ctx.t(),
+              :opentelemetry.trace_id(),
+              :otel_links.t(),
+              :opentelemetry.span_name(),
+              :opentelemetry.span_kind(),
+              :opentelemetry.attributes_map(),
+              :otel_sampler.sampler_config()
+            ) :: pos_integer()
+
   @behaviour :otel_sampler
 
   alias OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator
 
   @impl :otel_sampler
-  def setup(%{root: {_module, _opts}} = opts) do
+  def setup(%{root: {module, module_opts}} = opts) do
+    opts = Map.put(opts, :module_config, module.setup(module_opts))
+
     :otel_sampler_parent_based.setup(%{
       root: {__MODULE__, opts},
       local_parent_sampled: {AlwaysOnSampleRatePropagator, %{}},
@@ -24,6 +39,9 @@ defmodule OpentelemetryHoneycombSampler do
   def description(_config) do
     "Honeycomb Sampler"
   end
+
+  # necessary until https://github.com/open-telemetry/opentelemetry-erlang/pull/615 is released
+  @dialyzer {:nowarn_function, should_sample: 7}
 
   @impl :otel_sampler
   def should_sample(
