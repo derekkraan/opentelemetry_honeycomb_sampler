@@ -1,11 +1,6 @@
 defmodule OpentelemetryHoneycombSampler do
   @moduledoc """
   Honeycomb Sampler for OpenTelemetry.
-
-  Usage:
-
-  config :opentelemetry,
-    :sampler, {OpentelemetryHoneycombSampler, %{root: {MySampler, %{}}}}
   """
 
   @callback setup(:otel_sampler.sampler_opts()) :: :otel_sampler.sampler_config()
