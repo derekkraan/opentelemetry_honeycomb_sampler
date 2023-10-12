@@ -5,7 +5,7 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
     [
       app: :opentelemetry_honeycomb_sampler,
       version: "0.1.0",
-      elixir: "~> 1.15",
+      elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -21,9 +21,10 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:dialyxir, "~> 1.4", only: :dev},
+      {:ex_doc, "> 0.0.0", only: :dev},
       {:opentelemetry, "~> 1.2"},
-      {:opentelemetry_api, "~> 1.2"},
-      {:dialyxir, "~> 1.4", only: :dev}
+      {:opentelemetry_api, "~> 1.2"}
     ]
   end
 end
