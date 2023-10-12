@@ -10,7 +10,7 @@ defmodule OpentelemetryHoneycombSampler do
 
   @callback setup(:otel_sampler.sampler_opts()) :: :otel_sampler.sampler_config()
   @callback description(:otel_sampler.sampler_config()) :: :otel_sampler.description()
-  @callback should_sample(
+  @callback sample_rate(
               :otel_ctx.t(),
               :opentelemetry.trace_id(),
               :otel_links.t(),
@@ -54,7 +54,7 @@ defmodule OpentelemetryHoneycombSampler do
         %{root: {module, config}}
       ) do
     sample_rate =
-      case module.should_sample(ctx, trace_id, links, span_name, span_kind, span_attrs, config) do
+      case module.sample_rate(ctx, trace_id, links, span_name, span_kind, span_attrs, config) do
         sample_rate when is_integer(sample_rate) and sample_rate > 0 ->
           sample_rate
 
