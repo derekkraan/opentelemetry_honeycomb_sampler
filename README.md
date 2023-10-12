@@ -80,3 +80,6 @@ The package can be installed by adding `opentelemetry_honeycomb_sampler` to your
 
 The docs can be found at <https://hexdocs.pm/opentelemetry_honeycomb_sampler>.
 
+## Thanks
+
+Developed partially under contract at [Fairing.co](https://fairing.co).
