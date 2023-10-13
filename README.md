@@ -1,5 +1,7 @@
 # OpentelemetryHoneycombSampler
 
+<!-- MDOC !-->
+
 Sample with Honeycomb!
 
 This package provides a handy interface for sampling which is similar to how stock otel samplers work, but with all the messy details abstracted away. Simply pattern match on spans and set a sample rate.
@@ -72,11 +74,9 @@ Honeycomb's sample rates are expressed as a positive integer N (1, 2, 3, 1000, e
 
 A sample rate of 1, therefore, results in all of your events being sent to Honeycomb. This is as if you did not configure sampling at all.
 
-
 ## Installation
 
 The package can be installed by adding `opentelemetry_honeycomb_sampler` to your list of dependencies in `mix.exs`:
-
 
 The docs can be found at <https://hexdocs.pm/opentelemetry_honeycomb_sampler>.
 
