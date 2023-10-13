@@ -1,7 +1,9 @@
 defmodule OpentelemetryHoneycombSampler do
-  @moduledoc """
-  Honeycomb Sampler for OpenTelemetry.
-  """
+  @external_resource "README.md"
+  @moduledoc @external_resource
+             |> File.read!()
+             |> String.split("<!-- MDOC !-->")
+             |> Enum.fetch!(1)
 
   @callback setup(:otel_sampler.sampler_opts()) :: :otel_sampler.sampler_config()
   @callback description(:otel_sampler.sampler_config()) :: :otel_sampler.description()
