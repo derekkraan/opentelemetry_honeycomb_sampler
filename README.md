@@ -18,7 +18,7 @@ Install the package:
 # mix.exs
 def deps do
   [
-    {:opentelemetry_honeycomb_sampler, "~> 0.1.0"}
+    {:opentelemetry_honeycomb_sampler, "~> 1.0.0"}
   ]
 end
 ```
