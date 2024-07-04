@@ -1,4 +1,4 @@
-# OpentelemetryHoneycombSampler
+# OpentelemetryHoneycombSampler [![Hex pm](http://img.shields.io/hexpm/v/opentelemetry_honeycomb_sampler.svg?style=flat)](https://hex.pm/packages/opentelemetry_honeycomb_sampler) [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/opentelemetry_honeycomb_sampler)
 
 <!-- MDOC !-->
 
@@ -75,12 +75,6 @@ Make sure there is a catch-all function head at the very bottom of your file tha
 Honeycomb's sample rates are expressed as a positive integer N (1, 2, 3, 1000, etc). Their sample rate means "1 in N events will be sampled". In other words, if you return `20` from `should_sample/7`, then one in twenty, or 5% of your events, will eventually be sent to Honeycomb.
 
 A sample rate of 1, therefore, results in all of your events being sent to Honeycomb. This is as if you did not configure sampling at all.
-
-## Installation
-
-The package can be installed by adding `opentelemetry_honeycomb_sampler` to your list of dependencies in `mix.exs`:
-
-The docs can be found at <https://hexdocs.pm/opentelemetry_honeycomb_sampler>.
 
 ## Thanks
 
