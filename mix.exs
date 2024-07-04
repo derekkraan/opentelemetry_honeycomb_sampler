@@ -7,8 +7,9 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
       version: "1.0.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      package: package()
+      package: package(),
+      docs: docs(),
+      deps: deps()
     ]
   end
 
@@ -27,6 +28,10 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
       {:opentelemetry, "~> 1.2"},
       {:opentelemetry_api, "~> 1.3"}
     ]
+  end
+
+  defp docs() do
+    [main: "OpentelemetryHoneycombSampler"]
   end
 
   defp package do
