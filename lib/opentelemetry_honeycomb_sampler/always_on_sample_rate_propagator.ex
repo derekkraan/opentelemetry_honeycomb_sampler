@@ -5,13 +5,6 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
 
   @behaviour :otel_sampler
 
-  require Record
-
-  Record.defrecord(
-    :span_ctx,
-    Record.extract(:span_ctx, from_lib: "opentelemetry_api/include/opentelemetry.hrl")
-  )
-
   @impl :otel_sampler
   def setup(_sampler_opts) do
     []
@@ -55,11 +48,13 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
 
   @spec get_sample_rate(:otel_ctx.t()) :: pos_integer() | nil
   defp get_sample_rate(ctx) do
-    :otel_tracer.current_span_ctx(ctx)
-    |> span_ctx(:tracestate)
-    |> Enum.find_value(fn
-      {"SampleRate", sample_rate} when is_integer(sample_rate) and sample_rate > 0 -> sample_rate
+    tracestate =
+      :otel_tracer.current_span_ctx(ctx)
+      |> :otel_span.tracestate()
+
+    case :otel_tracestate.get("SampleRate", tracestate) do
+      sample_rate when is_integer(sample_rate) and sample_rate > 0 -> sample_rate
       _ -> nil
-    end)
+    end
   end
 end

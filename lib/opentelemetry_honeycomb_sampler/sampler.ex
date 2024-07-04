@@ -48,7 +48,7 @@ defmodule OpentelemetryHoneycombSampler.Sampler do
     {
       result,
       _attrs = [SampleRate: sample_rate],
-      _tracestate = [{"SampleRate", sample_rate} | tracestate]
+      _tracestate = :otel_tracestate.update("SampleRate", sample_rate, tracestate)
     }
   end
 end
