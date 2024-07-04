@@ -4,9 +4,9 @@
 
 Sampling for Honeycomb comes with some additional challenges. This library helps you sample with Honeycomb and takes care of all the messy details.
 
-- Honeycomb's `SampleRate` has its own format (1/SampleRate are sampled, where SampleRate is an integer > 0). See below for an example.
-- Honeycomb multiplies your spans by `SampleRate` to arrive at an estimate of the total number (sampled and unsampled) of spans.
-- Honeycomb expects `SampleRate` to be set on child spans as well as parent spans. If you don't take care of this detail, then your child spans won't be multiplied by `SampleRate` and will therefore be underrepresented in your Honeycomb searches / dashboards.
+- 💥 Honeycomb's `SampleRate` has its own format (1/SampleRate are sampled, where SampleRate is an integer > 0). See below for an example.
+- 💥 Honeycomb multiplies your spans by `SampleRate` to arrive at an estimate of the total number (sampled and unsampled) of spans.
+- 💥 Honeycomb expects `SampleRate` to be set on child spans as well as parent spans. If you don't take care of this detail, then your child spans won't be multiplied by `SampleRate` and will therefore be underrepresented in your Honeycomb searches / dashboards.
 
 This package provides a handy interface for sampling which is similar to how stock otel samplers work, but with all the messy details abstracted away. Simply pattern match on spans and set a sample rate.
 
