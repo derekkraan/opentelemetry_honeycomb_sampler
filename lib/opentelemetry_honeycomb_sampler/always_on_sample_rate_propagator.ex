@@ -36,8 +36,7 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
         []
       )
 
-    get_sample_rate(ctx)
-    |> case do
+    case get_sample_rate(ctx) do
       nil ->
         {result, [], tracestate}
 
