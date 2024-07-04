@@ -2,11 +2,13 @@
 
 <!-- MDOC !-->
 
-Sample with Honeycomb!
+Sampling for Honeycomb comes with some additional challenges. This library helps you sample with Honeycomb and takes care of all the messy details.
+
+- Honeycomb's `SampleRate` has its own format (1/SampleRate are sampled, where SampleRate is an integer > 0). See below for an example.
+- Honeycomb multiplies your spans by `SampleRate` to arrive at an estimate of the total number (sampled and unsampled) of spans.
+- Honeycomb expects `SampleRate` to be set on child spans as well as parent spans. If you don't take care of this detail, then your child spans won't be multiplied by `SampleRate` and will therefore be underrepresented in your Honeycomb searches / dashboards.
 
 This package provides a handy interface for sampling which is similar to how stock otel samplers work, but with all the messy details abstracted away. Simply pattern match on spans and set a sample rate.
-
-This package also makes sure that SampleRate is set on the spans as required by Honeycomb. Honeycomb multiplies your span counts by this SampleRate to arrive at a reasonable estimate of the true number of spans. This is also being set on child spans, so those will also be estimated properly by Honeycomb (unlike, I believe, in many other HC samplers).
 
 ## Getting started
 
@@ -70,7 +72,7 @@ And that's all there is to it!
 
 Make sure there is a catch-all function head at the very bottom of your file that returns the general sample rate that you would like to use.
 
-Honeycomb's sample rates are expressed as a positive integer N (1, 2, 3, 1000, etc). Their sample rate means "1 in N events will be sampled". In other words, if you return `10` from `should_sample/7`, then one in ten, or 10% of your events, will eventually be sent to Honeycomb.
+Honeycomb's sample rates are expressed as a positive integer N (1, 2, 3, 1000, etc). Their sample rate means "1 in N events will be sampled". In other words, if you return `20` from `should_sample/7`, then one in twenty, or 5% of your events, will eventually be sent to Honeycomb.
 
 A sample rate of 1, therefore, results in all of your events being sent to Honeycomb. This is as if you did not configure sampling at all.
 
