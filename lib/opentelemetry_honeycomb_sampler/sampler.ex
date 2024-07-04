@@ -20,12 +20,16 @@ defmodule OpentelemetryHoneycombSampler.Sampler do
         span_attrs,
         %{root: {module, config}}
       ) do
+    require Logger
+
     sample_rate =
       case module.sample_rate(ctx, trace_id, links, span_name, span_kind, span_attrs, config) do
         sample_rate when is_integer(sample_rate) and sample_rate > 0 ->
           sample_rate
 
-        _ ->
+        sample_rate ->
+          Logger.warning(fn -> "Expected integer SampleRate, > 0; got #{inspect(sample_rate)}" end)
+
           1
       end
 
@@ -48,7 +52,7 @@ defmodule OpentelemetryHoneycombSampler.Sampler do
     {
       result,
       _attrs = [SampleRate: sample_rate],
-      _tracestate = :otel_tracestate.update("SampleRate", sample_rate, tracestate)
+      _tracestate = :otel_tracestate.update("SampleRate", to_string(sample_rate), tracestate)
     }
   end
 end

@@ -51,8 +51,11 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
       :otel_tracer.current_span_ctx(ctx)
       |> :otel_span.tracestate()
 
-    case :otel_tracestate.get("SampleRate", tracestate) do
-      sample_rate when is_integer(sample_rate) and sample_rate > 0 -> sample_rate
+    :otel_tracestate.get("SampleRate", tracestate)
+    |> to_string
+    |> Integer.parse()
+    |> case do
+      {sample_rate, ""} when sample_rate > 0 -> sample_rate
       _ -> nil
     end
   end

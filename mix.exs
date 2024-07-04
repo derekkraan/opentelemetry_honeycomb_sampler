@@ -25,7 +25,7 @@ defmodule OpentelemetryHoneycombSampler.MixProject do
       {:dialyxir, "~> 1.4", only: :dev},
       {:ex_doc, "> 0.0.0", only: :dev},
       {:opentelemetry, "~> 1.2"},
-      {:opentelemetry_api, "~> 1.2"}
+      {:opentelemetry_api, "~> 1.3"}
     ]
   end
 
