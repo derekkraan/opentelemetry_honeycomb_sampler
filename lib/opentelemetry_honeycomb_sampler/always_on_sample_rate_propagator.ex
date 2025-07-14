@@ -35,28 +35,21 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
         attributes,
         []
       )
-
-    case get_sample_rate(ctx) do
-      nil ->
-        {result, [], tracestate}
-
-      sample_rate ->
-        {result, [SampleRate: sample_rate], tracestate}
-    end
+      |> OpentelemetryHoneycombSampler.add_sample_rate(get_sample_rate(ctx))
   end
 
   @spec get_sample_rate(:otel_ctx.t()) :: pos_integer() | nil
   defp get_sample_rate(ctx) do
-    tracestate =
+    parent_tracestate =
       :otel_tracer.current_span_ctx(ctx)
       |> :otel_span.tracestate()
 
-    :otel_tracestate.get("SampleRate", tracestate)
+    :otel_tracestate.get("samplerate", parent_tracestate)
     |> to_string
     |> Integer.parse()
     |> case do
       {sample_rate, ""} when sample_rate > 0 -> sample_rate
-      _ -> nil
+      _ -> 1
     end
   end
 end

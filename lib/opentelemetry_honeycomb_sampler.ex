@@ -58,4 +58,18 @@ defmodule OpentelemetryHoneycombSampler do
       config
     )
   end
+
+  def add_sample_rate({result, attrs, tracestate}, sample_rate) do
+    #
+    # Add SampleRate to the:
+    # - attributes, so that Honeycomb can account for the non-sampled spans
+    # - tracestate, so that we can propagate the SampleRate to the attributes of child spans
+    # (Note: the tracestate key must begin with a lowercase character, which is why the key is cased differently between attrs and tracestate. Otherwise it is silently discarded.)
+    #
+    {
+      result,
+      [{:SampleRate, sample_rate} | attrs],
+      :otel_tracestate.update("samplerate", to_string(sample_rate), tracestate)
+    }
+  end
 end

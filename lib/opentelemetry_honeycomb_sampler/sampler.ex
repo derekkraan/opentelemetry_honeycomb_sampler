@@ -33,26 +33,15 @@ defmodule OpentelemetryHoneycombSampler.Sampler do
           1
       end
 
-    {result, _attrs, tracestate} =
-      :otel_sampler_trace_id_ratio_based.should_sample(
-        ctx,
-        trace_id,
-        links,
-        span_name,
-        span_kind,
-        span_attrs,
-        :otel_sampler_trace_id_ratio_based.setup(1.0 / sample_rate)
-      )
-
-    #
-    # Add SampleRate to the:
-    # - attributes, so that Honeycomb can account for the non-sampled spans
-    # - tracestate, so that we can propagate the SampleRate to the attributes of child spans
-    #
-    {
-      result,
-      _attrs = [SampleRate: sample_rate],
-      _tracestate = :otel_tracestate.update("SampleRate", to_string(sample_rate), tracestate)
-    }
+    :otel_sampler_trace_id_ratio_based.should_sample(
+      ctx,
+      trace_id,
+      links,
+      span_name,
+      span_kind,
+      span_attrs,
+      :otel_sampler_trace_id_ratio_based.setup(1.0 / sample_rate)
+    )
+    |> OpentelemetryHoneycombSampler.add_sample_rate(sample_rate)
   end
 end
