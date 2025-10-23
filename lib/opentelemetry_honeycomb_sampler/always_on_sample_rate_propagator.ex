@@ -25,7 +25,7 @@ defmodule OpentelemetryHoneycombSampler.AlwaysOnSampleRatePropagator do
         attributes,
         _sampler_config
       ) do
-    {result, _attrs, tracestate} =
+    {_result, _attrs, _tracestate} =
       :otel_sampler_always_on.should_sample(
         ctx,
         trace_id,
